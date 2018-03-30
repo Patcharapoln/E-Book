@@ -11,7 +11,6 @@ class MockBookRepository: BookRepository() {
         bookList.add(Book(3, "BOOK3", 400.0))
         setChanged()
         notifyObservers()
-
     }
 
     override fun getBooks(): ArrayList<Book> {

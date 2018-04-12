@@ -12,8 +12,8 @@ class BookPresenter(val view: BookView, val repository: BookRepository): Observe
         repository.loadAllBooks()
     }
 
-    fun search(searchMsg: String) {
-        view.setBookList(repository.filter(searchMsg) as ArrayList<Book>)
+    fun search(searchMsg: String, sortBy: String) {
+        view.setBookList(repository.filter(searchMsg, sortBy) as ArrayList<Book>)
     }
 
     override fun update(o: Observable?, arg: Any?) {

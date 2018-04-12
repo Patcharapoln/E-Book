@@ -1,8 +1,6 @@
-package com.example.map.e_book.models
+package com.example.map.ebook.models
 
 class MockBookRepository: BookRepository() {
-
-    val bookList = ArrayList<Book>()
 
     override fun loadAllBooks() {
         bookList.clear()

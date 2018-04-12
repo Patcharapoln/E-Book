@@ -1,4 +1,4 @@
-package com.example.map.e_book.models
+package com.example.map.ebook.models
 
 import android.os.AsyncTask
 import com.beust.klaxon.JsonReader
@@ -7,8 +7,6 @@ import java.io.StringReader
 import java.net.URL
 
 class DataBookRepository: BookRepository() {
-
-    val bookList = ArrayList<Book>()
 
     override fun loadAllBooks() {
         bookList.clear()

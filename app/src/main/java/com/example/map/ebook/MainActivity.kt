@@ -1,14 +1,15 @@
-package com.example.map.e_book
+package com.example.map.ebook
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
-import com.example.map.e_book.models.Book
-import com.example.map.e_book.models.BookRepository
-import com.example.map.e_book.models.DataBookRepository
-import com.example.map.e_book.models.MockBookRepository
-import com.example.map.e_book.presenter.BookPresenter
-import com.example.map.e_book.presenter.BookView
+import android.widget.SearchView
+import com.example.map.ebook.models.Book
+import com.example.map.ebook.models.BookRepository
+import com.example.map.ebook.models.DataBookRepository
+import com.example.map.ebook.presenter.BookPresenter
+import com.example.map.ebook.presenter.BookView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BookView {
@@ -25,11 +26,21 @@ class MainActivity : AppCompatActivity(), BookView {
         presenter = BookPresenter(this, repository)
         adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1)
         presenter.start()
+        searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText != null)
+                    presenter.search(searchView.query.toString())
+                return false
+            }
+        })
     }
 
     override fun setBookList(books: ArrayList<Book>) {
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,books)
         bookList.adapter = adapter
     }
-
 }

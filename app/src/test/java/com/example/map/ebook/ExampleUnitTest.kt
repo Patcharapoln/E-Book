@@ -1,4 +1,4 @@
-package com.example.map.e_book
+package com.example.map.ebook
 
 import org.junit.Test
 

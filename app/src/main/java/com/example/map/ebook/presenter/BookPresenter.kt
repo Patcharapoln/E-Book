@@ -1,13 +1,19 @@
-package com.example.map.e_book.presenter
+package com.example.map.ebook.presenter
 
-import com.example.map.e_book.models.BookRepository
+import com.example.map.ebook.models.Book
+import com.example.map.ebook.models.BookRepository
 import java.util.*
+import kotlin.collections.ArrayList
 
 class BookPresenter(val view: BookView, val repository: BookRepository): Observer {
 
     fun start() {
         repository.addObserver(this)
         repository.loadAllBooks()
+    }
+
+    fun search(searchMsg: String) {
+        view.setBookList(repository.filter(searchMsg) as ArrayList<Book>)
     }
 
     override fun update(o: Observable?, arg: Any?) {

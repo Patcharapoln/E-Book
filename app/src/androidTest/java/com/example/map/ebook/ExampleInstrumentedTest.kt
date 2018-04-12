@@ -1,4 +1,4 @@
-package com.example.map.e_book
+package com.example.map.ebook
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

@@ -2,69 +2,43 @@ package com.example.map.ebook
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.SearchView
-import com.example.map.ebook.models.Book
-import com.example.map.ebook.models.BookRepository
-import com.example.map.ebook.models.DataBookRepository
-import com.example.map.ebook.presenter.BookPresenter
-import com.example.map.ebook.presenter.BookView
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), BookView {
+class MainActivity : AppCompatActivity() {
 
-    var listViewAdapter: ArrayAdapter<Book>? = null
-    var spinnerAdapter: ArrayAdapter<String>? = null
-    lateinit var presenter: BookPresenter
-    lateinit var repository: BookRepository
+    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        repository = DataBookRepository()
-        presenter = BookPresenter(this, repository)
-        listViewAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1)
-        spinnerAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1)
-        presenter.start()
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
-        setSearchView()
-        setSpinner()
+        // Set up the ViewPager with the sections adapter.
+        container.adapter = mSectionsPagerAdapter
+
+        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
     }
 
-    override fun setBookList(books: ArrayList<Book>) {
-        listViewAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,books)
-        bookList.adapter = listViewAdapter
-    }
-
-    private fun setSearchView() {
-        searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+    inner class SectionsPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+        override fun getItem(position: Int): Fragment? {
+            when (position) {
+                0 -> return BookList()
+                1 -> return BookList()
             }
+            return null
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText != null)
-                    presenter.search(searchView.query.toString(), spinner.selectedItem.toString())
-                return false
-            }
-        })
-    }
-
-    private fun setSpinner() {
-        spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayListOf("UNSORTED", "TITLE", "YEAR"))
-        spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = spinnerAdapter
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                presenter.search(searchView.query.toString(), spinner.selectedItem.toString())
-            }
+        override fun getCount(): Int {
+            return 2
         }
     }
+
 }

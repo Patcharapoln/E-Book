@@ -13,7 +13,7 @@ class BookPresenter(val view: BookView, val repository: BookRepository): Observe
     }
 
     fun search(searchMsg: String, sortBy: String) {
-        view.setBookList(repository.filter(searchMsg, sortBy) as ArrayList<Book>)
+        view.setBookList(repository.filterSorted(searchMsg, sortBy) as ArrayList<Book>)
     }
 
     override fun update(o: Observable?, arg: Any?) {

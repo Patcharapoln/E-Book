@@ -3,4 +3,5 @@
     <string name="tab_text_1">BOOK-STORE</string>
     <string name="tab_text_2">MY-BOOKs</string>
     <string name="sort">Sort By</string>
+    <string name="addcart">ADD</string>
 </resources>

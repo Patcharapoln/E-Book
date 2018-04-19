@@ -1,4 +1,4 @@
-package com.example.map.ebook
+package com.example.map.ebook.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,29 +8,32 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
+import com.example.map.ebook.R
+import com.example.map.ebook.adapter.BookArrayAdapter
 import com.example.map.ebook.models.Book
 import com.example.map.ebook.models.BookRepository
 import com.example.map.ebook.models.DataBookRepository
+import com.example.map.ebook.models.MockBookRepository
 import com.example.map.ebook.presenter.BookPresenter
 import com.example.map.ebook.presenter.BookView
 import kotlinx.android.synthetic.main.booklist_fragment.*
 import kotlinx.android.synthetic.main.booklist_fragment.view.*
 
-class BookList : Fragment(), BookView {
+class BookStoreFragment : Fragment(), BookView {
 
-    private var listViewAdapter: ArrayAdapter<Book>? = null
+//    private var listViewAdapter: ArrayAdapter<Book>? = null
+    private var listViewAdapter: BookArrayAdapter? = null
     private var spinnerAdapter: ArrayAdapter<String>? = null
     lateinit var presenter: BookPresenter
     lateinit var repository: BookRepository
-
     lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.booklist_fragment, container, false)
-        repository = DataBookRepository()
+//        repository = DataBookRepository()
+        repository = MockBookRepository()
         presenter = BookPresenter(this, repository)
         presenter.start()
-        listViewAdapter = ArrayAdapter(rootView.context,android.R.layout.simple_list_item_1)
         spinnerAdapter = ArrayAdapter(rootView.context,android.R.layout.simple_list_item_1)
         setSearchView()
         setSpinner()
@@ -38,7 +41,7 @@ class BookList : Fragment(), BookView {
     }
 
     override fun setBookList(books: ArrayList<Book>) {
-        listViewAdapter = ArrayAdapter(rootView.context, android.R.layout.simple_list_item_1,books)
+        listViewAdapter = BookArrayAdapter(rootView.context, books)
         rootView.bookList.adapter = listViewAdapter
     }
 

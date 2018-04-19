@@ -1,7 +1,6 @@
 package com.example.map.ebook.adapter
 
 import android.app.AlertDialog
-import android.app.FragmentManager
 import android.content.Context
 import android.content.DialogInterface
 import android.view.View
@@ -10,14 +9,6 @@ import android.view.LayoutInflater
 import android.widget.*
 import com.example.map.ebook.R
 import com.example.map.ebook.models.Book
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
-import com.example.map.ebook.fragment.AddCartDialogFragment
-import java.io.BufferedInputStream
-import java.io.IOException
-import java.io.InputStream
-import java.net.URL
 
 
 class BookArrayAdapter(context: Context, list: ArrayList<Book>): BaseAdapter(), ListAdapter{

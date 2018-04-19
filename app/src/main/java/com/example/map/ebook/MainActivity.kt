@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import android.view.MenuItem
 import com.example.map.ebook.fragment.BookStoreFragment
+import com.example.map.ebook.fragment.MockUserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment? {
             when (position) {
                 0 -> return BookStoreFragment()
-                1 -> return BookStoreFragment()
+                1 -> return MockUserFragment()
             }
             return null
         }

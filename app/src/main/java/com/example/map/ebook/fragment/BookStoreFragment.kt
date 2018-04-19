@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.booklist_fragment.view.*
 
 class BookStoreFragment : Fragment(), BookView {
 
-//    private var listViewAdapter: ArrayAdapter<Book>? = null
     private var listViewAdapter: BookArrayAdapter? = null
     private var spinnerAdapter: ArrayAdapter<String>? = null
     lateinit var presenter: BookPresenter

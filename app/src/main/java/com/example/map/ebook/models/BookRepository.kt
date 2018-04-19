@@ -8,7 +8,10 @@ abstract class BookRepository: Observable() {
     val bookList = ArrayList<Book>()
 
     abstract fun loadAllBooks()
-    abstract fun getBooks(): ArrayList<Book>
+    
+    fun getBooks(): ArrayList<Book> {
+        return bookList
+    }
 
     fun filterSorted(searchMsg: String, sortBy: String): List<Book> {
         var searchBook =  bookList.filter { book: Book ->
@@ -22,5 +25,11 @@ abstract class BookRepository: Observable() {
         }
 
         return searchBook
+    }
+
+    fun addBook(book: Book){
+        bookList.add(book)
+        setChanged()
+        notifyObservers()
     }
 }

@@ -16,6 +16,11 @@ class BookPresenter(val view: BookView, val repository: BookRepository): Observe
         view.setBookList(repository.filterSorted(searchMsg, sortBy) as ArrayList<Book>)
     }
 
+    fun addBook(bookList: ArrayList<Book>) {
+        for(book in bookList)
+            repository.addBook(book)
+    }
+
     override fun update(o: Observable?, arg: Any?) {
         if(o == repository) {
             view.setBookList(repository.getBooks())

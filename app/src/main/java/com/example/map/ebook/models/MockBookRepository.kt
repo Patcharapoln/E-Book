@@ -10,9 +10,4 @@ class MockBookRepository: BookRepository() {
         setChanged()
         notifyObservers()
     }
-
-    override fun getBooks(): ArrayList<Book> {
-        return bookList
-    }
-
 }

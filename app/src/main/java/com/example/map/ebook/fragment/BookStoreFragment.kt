@@ -40,8 +40,12 @@ class BookStoreFragment : Fragment(), BookView {
     }
 
     override fun setBookList(books: ArrayList<Book>) {
-        listViewAdapter = BookArrayAdapter(rootView.context, books)
+        listViewAdapter = BookArrayAdapter(rootView.context, books, true)
         rootView.bookList.adapter = listViewAdapter
+    }
+
+    fun getCartList(): ArrayList<Book> {
+        return listViewAdapter!!.cartList
     }
 
     private fun setSearchView() {

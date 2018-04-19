@@ -12,21 +12,27 @@ import com.example.map.ebook.R
 import com.example.map.ebook.models.Book
 
 
-class BookArrayAdapter(val context: Context, val list: ArrayList<Book>): BaseAdapter(), ListAdapter{
+class BookArrayAdapter(val context: Context, val list: ArrayList<Book>, val isLineItem: Boolean = false): BaseAdapter(), ListAdapter{
+
+    val cartList = ArrayList<Book>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         if (view == null) {
-            val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.lineitem, null)
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            if(isLineItem)
+                view = inflater.inflate(R.layout.lineitem, null)
+            else
+                view = inflater.inflate(R.layout.book_info, null)
         }
 
+        val book: Book = list[position]
         //Handle TextView and display string from your list
         val bookTitleText = view!!.findViewById(R.id.book_title) as TextView
-        bookTitleText.text = list[position].toString()
+        bookTitleText.text = book.toString()
 
         val bookPriceText = view.findViewById(R.id.book_price) as TextView
-        bookPriceText.text = "Price: " + list[position].price
+        bookPriceText.text = "Price: " + book.price
 
         val bookImage = view.findViewById(R.id.book_image) as ImageView
 //        var input: InputStream? = null
@@ -49,27 +55,29 @@ class BookArrayAdapter(val context: Context, val list: ArrayList<Book>): BaseAda
 //        }
 
         //Handle buttons and add onClickListeners
-        val addBtn = view.findViewById(R.id.add_btn) as Button
-
-        addBtn.setOnClickListener(View.OnClickListener {
-            val builder = AlertDialog.Builder(this.context)
-            builder.setMessage("Add this book to cart ?")
-                    .setPositiveButton("ADD", DialogInterface.OnClickListener { dialog, id ->
-                        println(list[position].title)
-                    })
-                    .setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialog, id ->
-                        dialog.cancel()
-                    })
-            // Create the AlertDialog object and return it
-            builder.create().show()
-            notifyDataSetChanged()
-        })
+        if(isLineItem){
+            val addBtn = view.findViewById(R.id.add_btn) as Button
+            addBtn.setOnClickListener({
+                val builder = AlertDialog.Builder(this.context)
+                builder.setMessage("Add this" + book.title + " to cart ?")
+                        .setPositiveButton("ADD", DialogInterface.OnClickListener { dialog, id ->
+                            if(!cartList.contains(book))
+                                cartList.add(book)
+                        })
+                        .setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialog, id ->
+                            dialog.cancel()
+                        })
+                // Create the AlertDialog object and return it
+                builder.create().show()
+                notifyDataSetChanged()
+            })
+        }
 
         return view
     }
 
     override fun getItem(position: Int): Any {
-        return list.get(position)
+        return list[position]
     }
 
     override fun getItemId(position: Int): Long {

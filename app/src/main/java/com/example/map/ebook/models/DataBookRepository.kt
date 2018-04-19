@@ -14,10 +14,6 @@ class DataBookRepository: BookRepository() {
         task.execute()
     }
 
-    override fun getBooks(): ArrayList<Book> {
-        return bookList
-    }
-
     inner class BookLoaderTask: AsyncTask<String, Unit, String>() {
 
         override fun doInBackground(vararg params: String?): String {
